@@ -32,7 +32,6 @@ session = Session(engine)
 #################################################
 app = Flask(__name__)
 
-
 #################################################
 # Flask Routes
 #################################################
@@ -81,7 +80,6 @@ def welcome():
     </ul>
     </html>
     """
-
 
 @app.route("/api/v1.0/precipitation")
 def precipitation():
@@ -139,8 +137,6 @@ def tobs():
 
     return jsonify(tobs_list)
 
-
-
 @app.route("/api/v1.0/<start>")
 def start(start=None):
 
@@ -151,8 +147,6 @@ def start(start=None):
     from_start_list=list(from_start)
     return jsonify(from_start_list)
 
-    
-
 @app.route("/api/v1.0/<start>/<end>")
 def start_end(start=None, end=None):
     # Docstring
@@ -161,8 +155,6 @@ def start_end(start=None, end=None):
     between_dates = session.query(Measurement.date, func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).filter(Measurement.date >= start).filter(Measurement.date <= end).group_by(Measurement.date).all()
     between_dates_list=list(between_dates)
     return jsonify(between_dates_list)
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
